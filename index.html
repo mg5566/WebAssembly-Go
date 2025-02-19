@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Go WASM 샌드박스</title>
+    <script src="wasm_exec.js"></script>
+</head>
+<body>
+    <div id="wasm-output" style="border: 2px solid blue; padding: 8rem;">
+        <!-- GO 에서 DOM 조작할 영역 -->
+    </div>
+
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject)
+        .then((result) => {
+            go.run(result.instance);
+            console.log("Go WASM 샌드박스 실행 완료");
+        })
+        .catch((err) => {
+            console.error("WASM 초기화 실패", err);
+        });
+    </script>
+</body>
+</html>
